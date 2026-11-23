@@ -284,7 +284,7 @@ function renderizarPosts() {
 }
 
 function criarElementoComentario(comentario) {
-    const autor = usuariosPorId[comentario.usuario] || { nome: `Usuário #${comentario.usuario}` };
+    const autor = usuariosPorId[comentario.usuario] || { nome: `Usuário #${comentario.usuario}`, img: "" };
     const ehMeuComentario = comentario.usuario === usuarioLogado.id;
     const tagEditado = comentario.editado ? " (editado)" : "";
 
@@ -302,14 +302,19 @@ function criarElementoComentario(comentario) {
 
     item.innerHTML = `
         <div class="comentario-topo">
-            <div>
-                <span class="comentario-autor">${escaparHtml(autor.nome)}</span>
-                <span class="comentario-data">${formatarData(comentario.data)}${tagEditado}</span>
+            <div class="comentario-autor-info">
+                <div class="avatar-comentario"></div>
+                <div>
+                    <span class="comentario-autor">${escaparHtml(autor.nome)}</span>
+                    <span class="comentario-data">${formatarData(comentario.data)}${tagEditado}</span>
+                </div>
             </div>
             ${acoesComentario}
         </div>
         <div class="comentario-texto">${escaparHtml(comentario.texto)}</div>
     `;
+
+    renderizarAvatar(item.querySelector(".avatar-comentario"), autor);
 
     if (ehMeuComentario) {
         item.querySelector(".btn-editar-coment").addEventListener("click", () => {
@@ -470,7 +475,7 @@ function configurarEventos() {
         }
     });
 
-    // edição de post
+    // editar post
     document.getElementById("btn-cancelar-edicao").addEventListener("click", fecharModalEdicao);
 
     document.getElementById("form-editar-post").addEventListener("submit", async (e) => {
@@ -490,7 +495,7 @@ function configurarEventos() {
         }
     });
 
-    // Modal de edição de comentário
+    // editar comentário
     document.getElementById("btn-cancelar-comentario").addEventListener("click", fecharModalComentario);
 
     document.getElementById("form-editar-comentario").addEventListener("submit", async (e) => {
@@ -509,7 +514,7 @@ function configurarEventos() {
         }
     });
 
-    // Modal de confirmação de exclusão
+    // confirmar exclusão
     document.getElementById("btn-cancelar-exclusao").addEventListener("click", fecharModalExclusao);
 
     document.getElementById("btn-confirmar-exclusao").addEventListener("click", async () => {
