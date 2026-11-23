@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - Rede Social</title>
+    <link rel="stylesheet" href="../css/feed.css">
+</head>
+<body>
+
+    <header class="topo-feed">
+        <div class="topo-conteudo">
+            <h1 class="logo-rede">REDE SOCIAL</h1>
+            <div class="topo-usuario">
+                <div class="avatar-pequeno" id="topo-avatar"></div>
+                <span id="topo-nome">Carregando...</span>
+                <button type="button" id="btn-sair" class="btn-sair">SAIR</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="layout-tres-colunas">
+        
+        <!-- Perfil e Filtro -->
+        <aside class="coluna-esquerda">
+            <div class="card-perfil">
+                <div class="avatar-grande" id="perfil-avatar"></div>
+                <h2 id="perfil-nome" class="perfil-nome">Usuário</h2>
+                <p id="perfil-login" class="perfil-login">@login</p>
+                <div class="perfil-stats">
+                    <div>
+                        <strong id="stat-posts">0</strong>
+                        <span>Posts</span>
+                    </div>
+                    <div>
+                        <strong id="stat-likes">0</strong>
+                        <span>Likes dados</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="menu-lateral">
+                <button type="button" id="btn-todos-posts" class="item-menu ativo">Todos os posts</button>
+                <button type="button" id="btn-meus-posts" class="item-menu">Meus posts</button>
+            </nav>
+        </aside>
+
+        <!--Criar Post + Lista de Posts -->
+        <section class="coluna-central">
+            <form id="form-novo-post" class="card-criar-post">
+                <textarea id="texto-novo-post" rows="3" placeholder="No que você está pensando?"></textarea>
+
+                <div id="grupo-url-post" class="grupo-url-post escondido">
+                    <input type="url" id="input-img-post" maxlength="255" placeholder="Link da foto (opcional)">
+                </div>
+
+                <div id="area-preview-post" class="preview-post escondido">
+                    <img id="img-preview-post" alt="Preview do post">
+                    <button type="button" id="btn-remover-img-post" class="btn-remover-img">Remover foto</button>
+                </div>
+
+                <p id="erro-post" class="msg-erro escondido"></p>
+
+                <div class="acoes-criar-post">
+                    <button type="button" id="btn-toggle-url-post" class="btn-secundario">+ Foto</button>
+                    <button type="submit" class="btn-primario">PUBLICAR</button>
+                </div>
+            </form>
+
+            <div id="barra-filtro" class="barra-filtro escondido">
+                <span id="texto-filtro">Filtrando posts</span>
+                <button type="button" id="btn-limpar-filtro" class="btn-link">Mostrar todos</button>
+            </div>
+
+            <div id="lista-posts" class="lista-posts">
+                <p class="estado-vazio">Carregando feed...</p>
+            </div>
+        </section>
+
+        <!-- Usuários da Rede -->
+        <aside class="coluna-direita">
+            <div class="card-usuarios">
+                <h3 class="titulo-lateral">USUÁRIOS</h3>
+                <ul id="lista-usuarios" class="lista-usuarios">
+                    <li class="estado-vazio">Carregando...</li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+
+    <!-- EDIÇÃO DE POST -->
+    <div id="modal-editar-post" class="modal-fundo escondido">
+        <div class="modal-caixa">
+            <h3>Editar Post</h3>
+            <form id="form-editar-post">
+                <input type="hidden" id="editar-post-id">
+                <textarea id="editar-post-texto" rows="4" required></textarea>
+
+                <div class="grupo-url-post">
+                    <input type="url" id="editar-post-input-img" maxlength="255" placeholder="Link da foto (opcional)">
+                </div>
+
+                <p id="status-img-edicao" class="texto-auxiliar"></p>
+
+                <div class="botoes-modal">
+                    <button type="button" id="btn-cancelar-edicao" class="btn-secundario">Cancelar</button>
+                    <button type="submit" class="btn-primario">Salvar alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="../js/feed.js"></script>
+</body>
+</html>

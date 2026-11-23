@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Rede Social</title>
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+    <main class="container-auth">
+        <h1 class="titulo-rede">REDE SOCIAL</h1>
+
+        <div class="cartao-auth">
+            <form id="form-login" class="form-auth">
+                <div class="grupo-campo">
+                    <input type="text" id="login-usuario" placeholder="LOGIN" required>
+                </div>
+
+                <div class="grupo-campo">
+                    <input type="password" id="login-senha" placeholder="SENHA" required>
+                </div>
+
+                <p id="msg-erro" class="msg-erro escondido"></p>
+
+                <button type="submit" class="btn-enviar" id="btn-entrar">ENTRAR</button>
+            </form>
+        </div>
+
+        <a href="html/cadastro.html" class="link-auth">CADASTRO</a>
+    </main>
+
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

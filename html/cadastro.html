@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Rede Social</title>
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+
+    <main class="container-auth">
+        <h1 class="titulo-rede">REDE SOCIAL</h1>
+        
+        <div class="cartao-auth">
+            <h2 class="subtitulo-cartao">CADASTRO</h2>
+
+            <form id="form-cadastro" class="form-auth">
+                <div class="area-foto">
+                    <div class="circulo-foto">
+                        <span id="texto-foto">FOTO</span>
+                        <img id="preview-foto" class="img-preview escondido" alt="Preview">
+                    </div>
+                </div>
+
+                <div class="grupo-campo">
+                    <input type="url" id="cadastro-foto-url" maxlength="255" placeholder="LINK DA FOTO (OPCIONAL)">
+                </div>
+
+                <div class="grupo-campo">
+                    <input type="text" id="cadastro-login" placeholder="LOGIN" required>
+                </div>
+                
+                <div class="grupo-campo">
+                    <input type="password" id="cadastro-senha" placeholder="SENHA" required>
+                </div>
+                
+                <div class="grupo-campo">
+                    <input type="text" id="cadastro-nome" placeholder="NOME" required>
+                </div>
+
+                <p id="msg-erro" class="msg-erro escondido"></p>
+
+                <button type="submit" class="btn-enviar" id="btn-cadastrar">CADASTRAR</button>
+            </form>
+        </div>
+
+        <a href="../index.html" class="link-auth">JÁ TEM UMA CONTA? ENTRAR</a>
+    </main>
+
+    <script type="module" src="../js/auth.js"></script>
+</body>
+</html>
