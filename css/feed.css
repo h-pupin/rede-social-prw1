@@ -839,3 +839,21 @@ body {
         position: static;
     }
 }
+
+.btn-perigo {
+    padding: 9px 16px;
+    border-radius: var(--raio-input);
+    border: 1px solid rgba(224, 108, 108, 0.45);
+    background-color: var(--vermelho-bg);
+    color: #f5a3a3;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-perigo:hover {
+    background-color: rgba(224, 108, 108, 0.26);
+    border-color: var(--vermelho-sutil);
+    color: #ffffff;
+}

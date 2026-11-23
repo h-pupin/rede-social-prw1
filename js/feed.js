@@ -4,6 +4,7 @@ let usuarioLogado = null;
 let todosPosts = [];
 let usuariosPorId = {};
 let filtroUsuarioId = null;
+let acaoExclusaoPendente = null;
 
 function escaparHtml(texto) {
     if (!texto) return "";
@@ -311,27 +312,19 @@ function criarElementoComentario(comentario) {
     `;
 
     if (ehMeuComentario) {
-        item.querySelector(".btn-editar-coment").addEventListener("click", async () => {
-            const novoTexto = prompt("Editar comentário:", comentario.texto);
-            if (!novoTexto || !novoTexto.trim() || novoTexto.trim() === comentario.texto) return;
-
-            try {
-                await chamarApi(`/comentarios/${comentario.id}`, "PUT", { texto: novoTexto.trim() }, true);
-                await carregarDados();
-            } catch (erro) {
-                alert("Erro ao editar comentário.");
-            }
+        item.querySelector(".btn-editar-coment").addEventListener("click", () => {
+            abrirModalComentario(comentario);
         });
 
-        item.querySelector(".btn-excluir-coment").addEventListener("click", async () => {
-            if (!confirm("Excluir este comentário?")) return;
-
-            try {
-                await chamarApi(`/comentarios/${comentario.id}`, "DELETE", null, true);
-                await carregarDados();
-            } catch (erro) {
-                alert("Erro ao excluir comentário.");
-            }
+        item.querySelector(".btn-excluir-coment").addEventListener("click", () => {
+            abrirModalExclusao(
+                "Excluir comentário",
+                "Tem certeza que deseja excluir este comentário?",
+                async () => {
+                    await chamarApi(`/comentarios/${comentario.id}`, "DELETE", null, true);
+                    await carregarDados();
+                }
+            );
         });
     }
 
@@ -347,15 +340,15 @@ async function alternarLike(postId) {
     }
 }
 
-async function excluirPost(postId) {
-    if (!confirm("Tem certeza que deseja excluir este post?")) return;
-
-    try {
-        await chamarApi(`/posts/${postId}`, "DELETE", null, true);
-        await carregarDados();
-    } catch (erro) {
-        alert("Erro ao excluir o post.");
-    }
+function excluirPost(postId) {
+    abrirModalExclusao(
+        "Excluir post",
+        "Tem certeza que deseja excluir este post? Essa ação não pode ser desfeita.",
+        async () => {
+            await chamarApi(`/posts/${postId}`, "DELETE", null, true);
+            await carregarDados();
+        }
+    );
 }
 
 function abrirModalEdicao(post) {
@@ -371,6 +364,29 @@ function abrirModalEdicao(post) {
 
 function fecharModalEdicao() {
     document.getElementById("modal-editar-post").classList.add("escondido");
+}
+
+function abrirModalComentario(comentario) {
+    document.getElementById("editar-comentario-id").value = comentario.id;
+    document.getElementById("editar-comentario-texto").value = comentario.texto || "";
+    document.getElementById("modal-editar-comentario").classList.remove("escondido");
+    document.getElementById("editar-comentario-texto").focus();
+}
+
+function fecharModalComentario() {
+    document.getElementById("modal-editar-comentario").classList.add("escondido");
+}
+
+function abrirModalExclusao(titulo, mensagem, callbackConfirmar) {
+    document.getElementById("titulo-confirmar-exclusao").textContent = titulo;
+    document.getElementById("texto-confirmar-exclusao").textContent = mensagem;
+    acaoExclusaoPendente = callbackConfirmar;
+    document.getElementById("modal-confirmar-exclusao").classList.remove("escondido");
+}
+
+function fecharModalExclusao() {
+    acaoExclusaoPendente = null;
+    document.getElementById("modal-confirmar-exclusao").classList.add("escondido");
 }
 
 function configurarEventos() {
@@ -474,6 +490,39 @@ function configurarEventos() {
         }
     });
 
+    // Modal de edição de comentário
+    document.getElementById("btn-cancelar-comentario").addEventListener("click", fecharModalComentario);
+
+    document.getElementById("form-editar-comentario").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById("editar-comentario-id").value;
+        const texto = document.getElementById("editar-comentario-texto").value.trim();
+        if (!texto) return;
+
+        try {
+            await chamarApi(`/comentarios/${id}`, "PUT", { texto }, true);
+            fecharModalComentario();
+            await carregarDados();
+        } catch (erro) {
+            alert("Erro ao editar comentário.");
+        }
+    });
+
+    // Modal de confirmação de exclusão
+    document.getElementById("btn-cancelar-exclusao").addEventListener("click", fecharModalExclusao);
+
+    document.getElementById("btn-confirmar-exclusao").addEventListener("click", async () => {
+        if (!acaoExclusaoPendente) return;
+        const executar = acaoExclusaoPendente;
+        fecharModalExclusao();
+
+        try {
+            await executar();
+        } catch (erro) {
+            alert("Erro ao excluir item.");
+        }
+    });
 }
 
 iniciarFeed();

@@ -110,6 +110,35 @@
         </div>
     </div>
 
+    <!-- EDITAR COMENTÁRIO -->
+    <div id="modal-editar-comentario" class="modal-fundo escondido">
+        <div class="modal-caixa">
+            <h3>Editar Comentário</h3>
+            <form id="form-editar-comentario">
+                <input type="hidden" id="editar-comentario-id">
+                <textarea id="editar-comentario-texto" rows="3" required></textarea>
+
+                <div class="botoes-modal">
+                    <button type="button" id="btn-cancelar-comentario" class="btn-secundario">Cancelar</button>
+                    <button type="submit" class="btn-primario">Salvar alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONFIRMAR EXCLUSÃo -->
+    <div id="modal-confirmar-exclusao" class="modal-fundo escondido">
+        <div class="modal-caixa">
+            <h3 id="titulo-confirmar-exclusao">Confirmar exclusão</h3>
+            <p id="texto-confirmar-exclusao" class="texto-auxiliar">Tem certeza que deseja excluir este item?</p>
+
+            <div class="botoes-modal">
+                <button type="button" id="btn-cancelar-exclusao" class="btn-secundario">Cancelar</button>
+                <button type="button" id="btn-confirmar-exclusao" class="btn-perigo">Excluir</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="../js/feed.js"></script>
 </body>
 </html>
